@@ -6,6 +6,17 @@ To use integrated terminal with mongo container:
 podman exec -it mongodb bash
 ```
 
+First, run:
+```bash
+./start_podman.sh
+```
+
+Second, run:
+```bash
+./start_app.sh
+```
+
+
 Then to view cats in database:
 ```bash
 use cat_database
