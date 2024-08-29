@@ -1,3 +1,3 @@
 #!/bin/bash
-docker build -t ts-express-mongo .
-docker run -p 3000:3000 --name myapp ts-express-mongo
+docker build -t mongo_cats .
+docker run -p 3000:3000 --name mongo_cats mongo_cats

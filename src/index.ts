@@ -1,25 +1,30 @@
-import express from 'express';
-import { connectToDatabase } from './db';
+import { Cat } from './domain/cat';
+import {CatsRepository} from './domain/catsRespository';
 
-const app = express();
-const port = 3000;
+const catsRepository = new CatsRepository();
+catsRepository.insertCat(new Cat('Romad', 13));
+// import express from 'express';
+// import { connectToDatabase } from './db';
 
-app.use(express.json());
+// const app = express();
+// const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('It\'s cat time!');
-});
+// app.use(express.json());
 
-app.get('/cats', async (req, res) => {
-  try {
-    const db = await connectToDatabase();
-    const items = await db.collection('cats').find().toArray();
-    res.json(items);
-  } catch (error) {
-    res.status(500).send('Error fetching items');
-  }
-});
+// app.get('/', (req, res) => {
+//   res.send('It\'s cat time!');
+// });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+// app.get('/cats', async (req, res) => {
+//   try {
+//     const db = await connectToDatabase();
+//     const items = await db.collection('cats').find().toArray();
+//     res.json(items);
+//   } catch (error) {
+//     res.status(500).send(`Error fetching items: ${error} error`);
+//   }
+// });
+
+// app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });
