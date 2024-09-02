@@ -8,11 +8,10 @@ const url = 'mongodb://localhost:27017';
 // create a client
 const catClient = new MongoClient(url);
 
-// create a cat repo
-const catsRepository = new CatsRepository();
+// create a cat repo and pass in client
+const catsRepository = new CatsRepository(catClient);
 
-catsRepository.insertCat(catClient, new Cat('Mimi', 12));
-
+catsRepository.insertCat(new Cat('Mimi', 13));
 // old code
 // import express from 'express';
 // import { connectToDatabase } from './db';

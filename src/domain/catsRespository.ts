@@ -10,13 +10,18 @@ const url = 'mongodb://localhost:27017';
 // todo migrations: https://medium.com/@tobie.tsuzuki/getting-started-with-node-js-express-and-knex-5640f595df98
 // https://knexjs.org/guide/migrations.html
 export class CatsRepository {
-    public async insertCat(client: MongoClient, cat: Cat){
-        // const client = new MongoClient(url); 
+    client: MongoClient;
+    constructor(client: MongoClient){
+        this.client = client;
+    }
+
+    // public async insertCat(client: MongoClient, cat: Cat){
+    public async insertCat(cat: Cat){
         try { 
             // Connect to MongoDB 
-            await client.connect(); 
+            await this.client.connect(); 
             console.log('Connected to MongoDB'); 
-            const db = client.db('cat_database'); 
+            const db = this.client.db('cat_database'); 
             const collection = db.collection<Cat>('cats');  
 
             // Insert the cat into the collection 
@@ -27,7 +32,7 @@ export class CatsRepository {
         } 
         finally { 
             // Close the connection 
-            await client.close(); 
+            await this.client.close(); 
             console.log('Disconnected from MongoDB'); 
         }
     }
