@@ -10,8 +10,8 @@ const url = 'mongodb://localhost:27017';
 // todo migrations: https://medium.com/@tobie.tsuzuki/getting-started-with-node-js-express-and-knex-5640f595df98
 // https://knexjs.org/guide/migrations.html
 export class CatsRepository {
-    public async insertCat(cat: Cat){
-        const client = new MongoClient(url); 
+    public async insertCat(client: MongoClient, cat: Cat){
+        // const client = new MongoClient(url); 
         try { 
             // Connect to MongoDB 
             await client.connect(); 
