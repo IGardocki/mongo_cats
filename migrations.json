@@ -1,0 +1,8 @@
+{
+  "uri": "mongodb://localhost:27017",
+  "database": "cat_database",
+  "options": {
+  },
+  "migrationsDir": "migrations",
+  "migrationsCollection": "migrations_changelog"
+}

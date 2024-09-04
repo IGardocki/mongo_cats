@@ -24,3 +24,18 @@ use cat_database
 # then...
 db.cats.find().pretty()
 ```
+
+To run migrations:
+```bash
+mongosh
+```
+
+```bash
+# to migrate up
+ts-node migrations/index.ts up
+```
+
+```bash
+# to migrate down (all migrations)
+ts-node migrations/index.ts down -a
+```
