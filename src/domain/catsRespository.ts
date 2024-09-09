@@ -1,5 +1,6 @@
 import {Cat} from './cat';
 import { MongoClient } from 'mongodb';
+import { catClient } from './catClient';
 
 const url = 'mongodb://localhost:27017';
 
@@ -11,12 +12,14 @@ const url = 'mongodb://localhost:27017';
 // https://knexjs.org/guide/migrations.html
 
 export class CatsRepository {
+    // add default value if user doesnt pass in client 
+    // this can be used to mock for tests
+    //
     client: MongoClient;
-    constructor(client: MongoClient){
+    constructor(client: MongoClient = catClient){
         this.client = client;
     }
 
-    // public async insertCat(client: MongoClient, cat: Cat){
     public async insertCat(cat: Cat): Promise<void>{
         try { 
             // Connect to MongoDB 

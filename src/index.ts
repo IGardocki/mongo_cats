@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb';
+import { catClient } from './domain/catClient';
 import { connectToDatabase } from './db';
 import { Cat } from './domain/cat';
 import {CatsRepository} from './domain/catsRespository';
@@ -6,7 +7,7 @@ import {CatsRepository} from './domain/catsRespository';
 const url = 'mongodb://localhost:27017';
 
 // create a client
-const catClient = new MongoClient(url);
+// const catClient = new MongoClient(url);
 
 // create a cat repo and pass in client
 const catsRepository = new CatsRepository(catClient);

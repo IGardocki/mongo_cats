@@ -1,15 +1,16 @@
 import { Db, MongoClient } from 'mongodb';
 import { MigrationInterface } from 'mongo-migrate-ts';
+import { Cat } from '../src/domain/cat';
 
 export class Transaction1691171075957 implements MigrationInterface {
   public async up(db: Db, client: MongoClient): Promise<void | never> {
-    await db.createCollection('test_cats_collection');
+    // await db.createCollection('test_cats_collection');
     const session = client.startSession();
     try {
       await session.withTransaction(async () => {
-        await db.collection('mycol').insertOne({ foo: 'one' });
-        await db.collection('mycol').insertOne({ foo: 'two' });
-        await db.collection('mycol').insertOne({ foo: 'three' });
+        await db.collection('cats').insertOne(new Cat('Mimi', 10));
+        await db.collection('cats').insertOne(new Cat('Romad', 13));
+        await db.collection('cats').insertOne(new Cat('The Detective', 8));
       });
     } finally {
       await session.endSession();
@@ -20,9 +21,9 @@ export class Transaction1691171075957 implements MigrationInterface {
     const session = client.startSession();
     try {
       await session.withTransaction(async () => {
-        await db.collection('mycol').deleteOne({ foo: 'one' });
-        await db.collection('mycol').deleteOne({ foo: 'two' });
-        await db.collection('mycol').deleteOne({ foo: 'three' });
+        await db.collection('cats').deleteOne({ name: 'Mimi', age: 10 });
+        await db.collection('cats').deleteOne({ name: 'Romad', age: 13 });
+        await db.collection('cats').deleteOne({ name: 'The Detective', age: 8 });
       });
     } finally {
       await session.endSession();
