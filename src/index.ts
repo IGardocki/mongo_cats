@@ -20,10 +20,31 @@ app.get('/', (req, res) => {
   res.send('It\'s cat time!');
 });
 
+// get all
 app.get('/cats', async (req, res) => {
   try {
     const allCats = await catsRepository.getAllCats();
     res.status(200).json(allCats);
+  } catch (error) {
+    res.status(500).send(`Error fetching items: ${error} error`);
+  }
+});
+
+// query db based off of one field
+app.get('/name/:name', async (req, res) => {
+  try {
+    const cats = await catsRepository.getCatsByName(req.params.name);
+    res.status(200).json(cats);
+  } catch (error) {
+    res.status(500).send(`Error fetching items: ${error} error`);
+  }
+});
+
+// query db and look within array in db
+app.get('/color/:color', async (req, res) => {
+  try {
+    const cats = await catsRepository.getCatsByColor(req.params.color);
+    res.status(200).json(cats);
   } catch (error) {
     res.status(500).send(`Error fetching items: ${error} error`);
   }
