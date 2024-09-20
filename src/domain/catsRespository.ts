@@ -1,6 +1,7 @@
 import {Cat} from './cat';
 import { Collection, MongoClient, WithId } from 'mongodb';
 import { catClient } from './catClient';
+import { catValidator } from './catValidator';
 
 const url = 'mongodb://localhost:27017';
 
@@ -12,21 +13,26 @@ export class CatsRepository {
     // this can be used to mock for tests
     client: MongoClient;
     constructor(client: MongoClient = catClient){
-        this.client = client;
+        this.client = client;     
     }
 
     /** Sets up db connection */
     async setUpCatDb(): Promise<Collection<Cat>>{
-        await this.client.connect(); 
-        console.log('Connected to MongoDB'); 
-        const db = this.client.db('cat_database'); 
-        const collection = db.collection<Cat>('cats'); 
-        return collection; 
-    }
-
+    await this.client.connect(); 
+    console.log('Connected to MongoDB'); 
+    const db = this.client.db('cat_database'); 
+    const collection = db.collection<Cat>('cats'); 
+    return collection; 
+}
 
     public async insertCat(cat: Cat): Promise<void>{
         try { 
+            // validate the cat
+            let valResp = catValidator(cat);
+            
+            if(!valResp.valid){
+                throw new Error(valResp.errorsAsString());
+            }
             // Connect to MongoDB 
             const collection = await this.setUpCatDb()
 

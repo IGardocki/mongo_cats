@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
   res.send('It\'s cat time!');
 });
 
-// get all
+// we do not want any logic in index.ts. We only want to have the try-catches in here
 app.get('/cats', async (req, res) => {
   try {
     const allCats = await catsRepository.getAllCats();
@@ -44,11 +44,13 @@ app.get('/name/:name', async (req, res) => {
 app.get('/color/:color', async (req, res) => {
   try {
     const cats = await catsRepository.getCatsByColor(req.params.color);
+    const badCat = await catsRepository.insertCat(new Cat('Mim', -1, ['blue']));
     res.status(200).json(cats);
   } catch (error) {
     res.status(500).send(`Error fetching items: ${error} error`);
   }
 });
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

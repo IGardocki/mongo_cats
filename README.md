@@ -39,3 +39,5 @@ ts-node migrations/index.ts up
 # to migrate down (all migrations)
 ts-node migrations/index.ts down -a
 ```
+
+Next steps: build out some more classes, and work on implementing validation with something more complex
