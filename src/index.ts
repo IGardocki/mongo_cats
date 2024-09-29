@@ -4,12 +4,15 @@ import { connectToDatabase } from './db';
 import { Cat } from './domain/cat';
 import {CatsRepository} from './domain/catsRespository';
 import express from 'express';
+import { CatShelter } from './domain/catShelter';
+import {CatShelterRepository} from './domain/catShelterRepository';
 
 
 const url = 'mongodb://localhost:27017';
 
 // create a cat repo and pass in client
 const catsRepository = new CatsRepository(catClient);
+const catShelterRepository = new CatShelterRepository(catClient)
 
 const app = express();
 const port = 3000;
@@ -46,6 +49,25 @@ app.get('/color/:color', async (req, res) => {
     const cats = await catsRepository.getCatsByColor(req.params.color);
     const badCat = await catsRepository.insertCat(new Cat('Mim', -1, ['blue']));
     res.status(200).json(cats);
+  } catch (error) {
+    res.status(500).send(`Error fetching items: ${error} error`);
+  }
+});
+
+
+app.get('/catShelters', async (req, res) => {
+  try {
+    const catShelters = await catShelterRepository.getAllCatShelters();
+    res.status(200).json(catShelters);
+  } catch (error) {
+    res.status(500).send(`Error fetching items: ${error} error`);
+  }
+});
+
+app.get('/catShelters/:catName', async (req, res) => {
+  try {
+    const catShelters = await catShelterRepository.getShelterWithCat(req.params.catName);
+    res.status(200).json(catShelters);
   } catch (error) {
     res.status(500).send(`Error fetching items: ${error} error`);
   }

@@ -4,7 +4,6 @@ import { Cat } from '../src/domain/cat';
 
 export class Transaction1691171075957 implements MigrationInterface {
   public async up(db: Db, client: MongoClient): Promise<void | never> {
-    // await db.createCollection('test_cats_collection');
     const session = client.startSession();
     try {
       await session.withTransaction(async () => {
