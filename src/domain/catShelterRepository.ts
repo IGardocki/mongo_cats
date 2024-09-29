@@ -78,11 +78,7 @@ export class CatShelterRepository {
             const collection = await this.setUpCatShelterDb();
 
             // need toArray to actually get a list of cats
-            result = await collection.find({catDescriptions:{
-                $elemMatch: {
-                    catName: catName
-                  }
-            }}).toArray();
+            result = await collection.find({'catDescriptions.name':catName}).toArray();
             console.log(result);
             return result;
 

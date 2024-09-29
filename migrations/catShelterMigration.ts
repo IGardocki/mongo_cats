@@ -15,12 +15,12 @@ export class Transaction1691171075958 implements MigrationInterface {
         // public tnrProgram: boolean = false,
       await session.withTransaction(async () => {
         await db.collection('cat_shelters').insertOne(new CatShelter('ADL', 10, 1000, 2, 
-            [{Imogen: 'spicy lass'}, {Whiskers: 'has whiskers'}],
+            [{name: 'Imogen', description: 'spicy lass'}, {name: 'Whiskers', description: 'has whiskers'}],
             ['Spongebob', 'Patrick'], false
         ));
 
         await db.collection('cat_shelters').insertOne(new CatShelter('T. Russell Reitz', 15, 1500, 12, 
-            [{Smoke: 'orange manx lass'}, {Fire: 'grey manx lass'}],
+            [{name: 'Smoke', description: 'orange manx lass'}, {name: 'Fire', description:'grey manx lass'}],
             ['Shaggy', 'Scooby'], true
         ));
       });
@@ -33,12 +33,13 @@ export class Transaction1691171075958 implements MigrationInterface {
     const session = client.startSession();
     try {
       await session.withTransaction(async () => {
-        await db.collection('cat_shelters').deleteOne(new CatShelter('ADL', 10, 1000, 12, 
-            [{Imogen: 'spicy lass'}, {Whiskers: 'has whiskers'}],
+        await db.collection('cat_shelters').insertOne(new CatShelter('ADL', 10, 1000, 2, 
+            [{name: 'Imogen', description: 'spicy lass'}, {name: 'Whiskers', description: 'has whiskers'}],
             ['Spongebob', 'Patrick'], false
         ));
-        await db.collection('cat_shelters').deleteOne(new CatShelter('T. Russell Reitz', 15, 1500, 12, 
-            [{Smoke: 'orange manx lass'}, {Fire: 'grey manx lass'}],
+
+        await db.collection('cat_shelters').insertOne(new CatShelter('T. Russell Reitz', 15, 1500, 12, 
+            [{name: 'Smoke', description: 'orange manx lass'}, {name: 'Fire', description: 'grey manx lass'}],
             ['Shaggy', 'Scooby'], true
         ));
       });
